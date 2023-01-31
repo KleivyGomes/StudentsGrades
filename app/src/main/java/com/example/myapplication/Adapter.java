@@ -64,9 +64,9 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder>{
         @Override
         public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
             if(Float.valueOf(db.get(0).getEvaluation())>=12){
-                menu.add(this.getAdapterPosition(), 101 , 1, "Delete");
+                menu.add(this.getAdapterPosition(), 101 , 1, R.string.delete);
             }else{
-                menu.add(this.getAdapterPosition(), 102 , 1, "Delete");
+                menu.add(this.getAdapterPosition(), 102 , 1, R.string.delete);
             }
         }
     }

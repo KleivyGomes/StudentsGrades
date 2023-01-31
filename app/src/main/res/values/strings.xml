@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">Students Grades</string>
+    <string name="deleted">Deleted!</string>
+    <string name="failDelete">Fail on delete!</string>
+    <string name="emptyDatabase">No students grades added yet!</string>
+    <string name="delete">Delete</string>
+    <string name="addSuccess">Student grades added successfully!</string>
+    <string name="addFail">Fail in add Students Grades!</string>
 </resources>

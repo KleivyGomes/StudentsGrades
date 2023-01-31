@@ -33,12 +33,9 @@ public class StudentList extends AppCompatActivity {
         //Floating Action Button configuration
         fat = findViewById(R.id.fat);
 
-        fat.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(),NewStudent.class);
-                startActivity(intent);
-            }
+        fat.setOnClickListener(v -> {
+            Intent intent = new Intent(getApplicationContext(),NewStudent.class);
+            startActivity(intent);
         });
 
         //Recycler View configuration
@@ -79,25 +76,19 @@ public class StudentList extends AppCompatActivity {
         approved = findViewById(R.id.approved);
         exam = findViewById(R.id.exam);
 
-        approved.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(recyclerView.getVisibility() == View.VISIBLE){
-                    recyclerView.setVisibility(View.GONE);
-                }else{
-                    recyclerView.setVisibility(View.VISIBLE);
-                }
-
+        approved.setOnClickListener(v -> {
+            if(recyclerView.getVisibility() == View.VISIBLE){
+                recyclerView.setVisibility(View.GONE);
+            }else{
+                recyclerView.setVisibility(View.VISIBLE);
             }
+
         });
-        exam.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(recyclerView2.getVisibility() == View.VISIBLE){
-                    recyclerView2.setVisibility(View.GONE);
-                }else{
-                    recyclerView2.setVisibility(View.VISIBLE);
-                }
+        exam.setOnClickListener(v -> {
+            if(recyclerView2.getVisibility() == View.VISIBLE){
+                recyclerView2.setVisibility(View.GONE);
+            }else{
+                recyclerView2.setVisibility(View.VISIBLE);
             }
         });
     }
@@ -109,12 +100,10 @@ public class StudentList extends AppCompatActivity {
             case 101:
                 id = adapter.db.get(item.getGroupId()).getId();
                 adapter.db.remove(item.getGroupId());
-                mdh.delete(id);
                 return delete(id);
             case 102:
                 id = adapter2.db.get(item.getGroupId()).getId();
                 adapter2.db.remove(item.getGroupId());
-                mdh.delete(id);
                 return delete(id);
             default:
                 return super.onContextItemSelected(item);
@@ -130,18 +119,19 @@ public class StudentList extends AppCompatActivity {
         }
 
         if(result){
-            displayToast("Delete");
+            displayToast(getString(R.string.deleted));
         }else{
-            displayToast("Fail on delete");
+            displayToast(getString(R.string.failDelete));
         }
         adapter.notifyDataSetChanged();
+        adapter2.notifyDataSetChanged();
         return true;
     }
 
     void DataInArrayList() {
         Cursor cursor = mdh.ReadAll();
         if (cursor.getCount() == 0) {
-            displayToast("Empty");
+            displayToast(getString(R.string.emptyDatabase));
         } else {
             while (cursor.moveToNext()) {
                 Database database = new Database(cursor.getInt(0), cursor.getString(1),
