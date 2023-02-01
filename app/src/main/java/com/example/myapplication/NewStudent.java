@@ -37,21 +37,31 @@ public class NewStudent extends AppCompatActivity {
 
         add.setOnClickListener(v -> {
             String name, test1,test2,homework,oee;
-            name = EditName.getText().toString();
-            test1 = EditTest1.getText().toString();
-            test2 = EditTest2.getText().toString();
-            homework = EditHomework.getText().toString();
-            oee = EditOee.getText().toString();
-            long evaluation = Math.round(Integer.valueOf(test1) * 0.3 + Integer.valueOf(test2) * 0.3 +
-                    Integer.valueOf(homework) * 0.3 + Integer.valueOf(oee) * 0.1) ;
-            boolean result = mb.add(name,test1,test2,homework,oee,String.valueOf(evaluation));
-            if(result){
-                displayToast(getString(R.string.addSuccess));
+            boolean result;
+            if(EditName.getText().toString().isEmpty() ||
+                    EditTest1.getText().toString().isEmpty() ||
+                    EditTest2.getText().toString().isEmpty() ||
+                    EditHomework.getText().toString().isEmpty() ||
+                    EditOee.getText().toString().isEmpty()){
+                displayToast(getString(R.string.EmptyInput));
             }else{
-                displayToast(getString(R.string.addFail));
+                name = EditName.getText().toString();
+                test1 = EditTest1.getText().toString();
+                test2 = EditTest2.getText().toString();
+                homework = EditHomework.getText().toString();
+                oee = EditOee.getText().toString();
+                long evaluation = Math.round(Integer.valueOf(test1) * 0.3 + Integer.valueOf(test2) * 0.3 +
+                        Integer.valueOf(homework) * 0.3 + Integer.valueOf(oee) * 0.1) ;
+                result = mb.add(name,test1,test2,homework,oee,String.valueOf(evaluation));
+                if(result){
+                    displayToast(getString(R.string.addSuccess));
+                }else{
+                    displayToast(getString(R.string.addFail));
+                }
+                Intent intent = new Intent(this,StudentList.class);
+                startActivity(intent);
             }
-            Intent intent = new Intent(this,StudentList.class);
-            startActivity(intent);
+
         });
     }
 

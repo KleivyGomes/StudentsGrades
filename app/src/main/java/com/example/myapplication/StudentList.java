@@ -1,10 +1,12 @@
 package com.example.myapplication;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
@@ -24,6 +26,7 @@ public class StudentList extends AppCompatActivity {
     Adapter adapter, adapter2;
     MyDatabaseHelper mdh;
     Button approved, exam;
+    AlertDialog.Builder builder;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -99,12 +102,25 @@ public class StudentList extends AppCompatActivity {
         switch (item.getItemId()){
             case 101:
                 id = adapter.db.get(item.getGroupId()).getId();
-                adapter.db.remove(item.getGroupId());
-                return delete(id);
+                builder = new AlertDialog.Builder(this);
+                builder.setTitle("ALERT!!!").setMessage(getString(R.string.deleteMessage))
+                        .setCancelable(true).setPositiveButton("YES", (dialogInterface, i) -> {
+                            adapter.db.remove(item.getGroupId());
+                            delete(id);
+                        }).setNegativeButton("NO", (dialogInterface, i) -> dialogInterface.cancel())
+                        .show();
+                return true;
+
             case 102:
                 id = adapter2.db.get(item.getGroupId()).getId();
-                adapter2.db.remove(item.getGroupId());
-                return delete(id);
+                builder = new AlertDialog.Builder(this);
+                builder.setTitle("ALERT!!!").setMessage(getString(R.string.deleteMessage))
+                        .setCancelable(true).setPositiveButton("YES", (dialogInterface, i) -> {
+                            adapter2.db.remove(item.getGroupId());
+                            delete(id);
+                        }).setNegativeButton("NO", (dialogInterface, i) -> dialogInterface.cancel())
+                        .show();
+                return true;
             default:
                 return super.onContextItemSelected(item);
         }
